@@ -1,7 +1,7 @@
 import Gun from 'gun/gun'
 import('gun/sea')
 const VueGun = import('vue-gun')
-const options = { peers: ['http://localhost:4000/gun'] }
+const options = { peers: ['http://localhost:4000/gun','http://gunjs.herokuapp.com:9000/gun'] }
 const gun = Gun(options)
 const SEA = gun.SEA
 export { gun, SEA, Gun }
