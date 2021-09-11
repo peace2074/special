@@ -133,7 +133,7 @@ And, enjoy :)
 
 ### Development
 
-Just run and visit http://localhost:3333
+Just run and visit http://localhost:4000
 
 ```bash
 pnpm dev
