@@ -1,24 +1,31 @@
+/* eslint-disable no-console */
 <script lang="ts">
-import { ref,  reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { _To } from 'waelio-utils'
-import { gun } from '../modules/gun'
-import { ModelObj } from 'vue-3d-model';
+import { UseGun } from '../useGun'
 
 export default {
   setup() {
     const { t } = useI18n()
-    const site = reactive(gun.get('waelio'))
-    // site.put({ url: 'waelio.com' })
-    const url = ref(site.get('url'))
-    // const abc = defineComponent(ModelObj)
+    const MyGun = new UseGun()
+    const gun = MyGun.gun
+    const site = gun.get('waelio')
+    site.put({ url: 'waelio.org' })
+
+    const getGunValue = (value: string) => {
+      site.get(value).then((v) => {
+        return v
+      })
+    }
+    const url = getGunValue('url')
     // eslint-disable-next-line no-console
     console.log('%cindex.vue line:20 url', 'color: #007acc;', url)
     return {
       t,
+      MyGun,
+      gun,
       site,
       url,
-      // abc
     }
   },
 
