@@ -33,6 +33,7 @@
     "@antfu/eslint-config": "^0.6.6",
     "@iconify/json": "^1.1.368",
     "@intlify/vite-plugin-vue-i18n": "^2.3.0",
+    "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@vitejs/plugin-vue": "^1.2.4",

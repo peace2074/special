@@ -1,4 +1,10 @@
-import { gun, SEA, Gun } from './modules/gun'
+
+import Gun from 'gun/gun'
+const options = { peers: ['https://waelio-gun.herokuapp.com:9000/gun','https://gun.waelio.com:9000/gun'] }
+const gun = new Gun(options)
+const SEA = Gun.SEA
+export { gun, SEA, Gun }
+
 
 type _gun = typeof gun
 type _SEA = typeof SEA
@@ -36,25 +42,28 @@ class UseGun implements useGun {
 
   getGun = () => this.lib.gun
 
-  // Self.encrypt = async function(payload: string|[]|{}, key: string) {
-  //   const pair = await this.SEA.pair()
-  //   const enc = await this.SEA.encrypt(payload, key)/* ? */
-  //   const data = await this.SEA.sign(enc, pair)
-  //   return await data
-  // }
-  // Self.decrypt = async function(payload: string|[]|{}, pub: string) {
-  //   const msg = await this.SEA.verify(payload, pub)
-  //   const dec = await this.SEA.decrypt(msg, pub)
-  //   return dec
-  // }
+  encrypt = async (payload: string|[]|{}, key: string) => {
+    const pair = await this.lib.SEA.pair(payload)
+    const enc = await this.lib.SEA.encrypt(payload, key)
+    const data = await this.lib.SEA.sign(enc, pair)
+    return data
+  }
 
-  // useGun.prototype.verify = async function(payload: string|[]|{}, key) {
-  //   const msg = await this.SEA.verify(payload, pair.pub)
-  //   const dec = await this.decrypt(msg, pair)
-  //   const proof = await this.SEA.work(dec, pair)
-  //   const check = await this.SEA.work(payload, pair)
-  //   return await proof === await check
+//  decrypt = async (payload: string|[]|{}, pub: string) =>{
+//     const msg = await this.lib.SEA.verify(payload, pub)
+//     const dec = await this.lib.SEA.decrypt(msg, pub)
+//     return dec
+//  }
+
+  // verify = async (payload: string|[]|{}, key: { pub:string }) => {
+  //   const msg = await this.SEA.verify(payload, key.pub)
+  //   const dec = await this.decrypt(msg, key.pub)
+
+  //   const proof = await this.SEA.work(dec, key)
+  //   const check = await this.SEA.work(payload, key)
+  //   return await !!(proof === check)
   // }
 }
+const useGun = new UseGun()
 
-export { UseGun }
+export { useGun }

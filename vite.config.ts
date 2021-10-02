@@ -11,6 +11,18 @@ import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 
+const moduleExclude = match => {
+  const m = id => id.indexOf(match) > -1
+  return {
+    name: `exclude-${match}`,
+    resolveId(id) {
+      if (m(id)) return id
+    },
+    load(id) {
+      if (m(id)) return `export default {}`
+    },
+  }
+}
 export default defineConfig({
   resolve: {
     alias: {
@@ -105,6 +117,7 @@ export default defineConfig({
     VueI18n({
       include: [path.resolve(__dirname, 'locales/**')],
     }),
+  moduleExclude('text-encoding'),
   ],
   // https://github.com/antfu/vite-ssg
   ssgOptions: {
@@ -117,6 +130,16 @@ export default defineConfig({
       'vue',
       'vue-router',
       '@vueuse/core',
+      'gun',
+      'gun/gun',
+      'gun/sea',
+      'gun/sea.js',
+      'gun/lib/then',
+      'gun/lib/webrtc',
+      'gun/lib/radix',
+      'gun/lib/radisk',
+      'gun/lib/store',
+      'gun/lib/rindexed',
     ],
     exclude: [
       'vue-demi',
@@ -124,4 +147,5 @@ export default defineConfig({
       'quasar',
     ],
   },
+
 })
