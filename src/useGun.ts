@@ -1,6 +1,6 @@
 
 import Gun from 'gun/gun'
-const options = { peers: ['https://waelio-gun.herokuapp.com:9000/gun','https://gun.waelio.com:9000/gun'] }
+const options = { peers: ['ws://localhost:9000/gun','ws://waelio.herokuapp.com/gun','ws://gun.waelio.com/gun'] }
 const gun = new Gun(options)
 const SEA = Gun.SEA
 export { gun, SEA, Gun }
@@ -42,7 +42,7 @@ class UseGun implements useGun {
 
   getGun = () => this.lib.gun
 
-  encrypt = async (payload: string|[]|{}, key: string) => {
+  encrypt = async (payload: CryptoKeyPair|[]|{}, key: string) => {
     const pair = await this.lib.SEA.pair(payload)
     const enc = await this.lib.SEA.encrypt(payload, key)
     const data = await this.lib.SEA.sign(enc, pair)
